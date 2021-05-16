@@ -1,6 +1,6 @@
 class Bar:
     def __init__(self):
-        self.bar_guest_list = []
+
         self.bar_drink_list = [
             {
             "beer": {

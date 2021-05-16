@@ -12,6 +12,7 @@ class TestRoom(unittest.TestCase):
         self.rooms = Rooms(self.capacity, self.entry_fee)
         self.songs = Songs()
         self.guests = Guests()
+        self.bar = Bar()
        
         
     def test_room_song_list_can_be_populated(self):
@@ -46,4 +47,18 @@ class TestRoom(unittest.TestCase):
         self.rooms.load_more_guests_with_entry_condition()
         self.assertEqual(7, self.rooms.room_guest_list_length())
 
-    
+    def test_if_guests_favorite_song_is_on_playlist(self):
+        self.assertEqual("Whoo!", self.rooms.favorite_song())
+
+    def test_guests_can_buy_drink_guest_0_add_to_drinks_list(self):
+        self.assertEqual(1, self.rooms.guest_drink_list_length())
+
+    def test_guests_can_be_charged_for_drinks(self):
+        self.rooms.add_drinks_to_guest()
+        self.rooms.charge_guest_for_drink()
+        self.assertEqual(47.50, self.rooms.room_guest_list[0]["money"])
+
+    def test_admin_total_cash_increased_for_drinks_sold(self):
+        self.rooms.add_drink_value_to_admin_cash_in()
+        self.assertEqual(2.50, self.rooms.admin["total_cash_in"])
+
